@@ -1,0 +1,31 @@
+server:
+  port: 7090
+
+spring:
+  application:
+    name: concurrencyLab
+  datasource:
+    url: jdbc:mysql://localhost:3309/security?serverTimezone=Asia/Seoul
+    username: root
+    password: 1q2w3e4r
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        show_sql: true
+        format_sql:  true
+
+
+logging:
+  level:
+    root: INFO
+    com:
+      example:
+        springconcurrencylab: DEBUG
+    org:
+      springframework:  INFO
+

@@ -1,5 +1,6 @@
 #  Spring  Boot에서 DB 동시성 제어와 비동기 처리 실험을 위한 프로젝트 
 ```
+   안타깝지만 언어는 : JAVA 
    spring boot + MYSQL + JPA + QueryDsl 
 ```
 
