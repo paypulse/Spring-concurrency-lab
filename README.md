@@ -2,6 +2,7 @@
 ```
    안타깝지만 언어는 : JAVA 
    spring boot + MYSQL + JPA + QueryDsl 
+   [swagger-ui] : http://localhost:7090/swagger-ui/index.html
 ```
 
 # 주요 기능

@@ -29,3 +29,11 @@ logging:
     org:
       springframework:  INFO
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html     # ?? ??
+    operationsSorter: method   # API ?? ?? (method, alpha, etc.)
+    tagsSorter: alpha          # ?? ?? ??
+    display-request-duration: true # ?? ?? ??
+  api-docs:
+    path: /v3/api-docs         # API ?? JSON ?? ??
