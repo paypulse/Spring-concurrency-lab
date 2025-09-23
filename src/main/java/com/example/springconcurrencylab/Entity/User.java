@@ -1,4 +1,4 @@
-package com.example.springconcurrencylab.Domain.Stock.Entity;
+package com.example.springconcurrencylab.Entity;
 
 import jakarta.persistence.*;
 import lombok.*;

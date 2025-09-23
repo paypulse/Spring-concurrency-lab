@@ -1,7 +1,7 @@
-package com.example.springconcurrencylab.Domain.Stock.Repository;
+package com.example.springconcurrencylab.Api.LabLack.Repository;
 
-import com.example.springconcurrencylab.Domain.Stock.Entity.QStock;
-import com.example.springconcurrencylab.Domain.Stock.Entity.Stock;
+import com.example.springconcurrencylab.Entity.QStock;
+import com.example.springconcurrencylab.Entity.Stock;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
