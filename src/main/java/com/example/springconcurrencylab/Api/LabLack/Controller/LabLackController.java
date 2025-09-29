@@ -20,16 +20,16 @@ public class LabLackController {
 
     private final LabLackService labLackService;
 
-    //<editor-fold desc="[POST][TEST] 데이터 재고를 새로 만들어 주는 엔드 포인트">
+    //<editor-fold desc="[POST][TEST] 낙관적 락 ">
     @PostMapping("/init/stack/{qty}")
     public ResponseEntity<BaseCtlDto> postStackInit(
-            @Parameter(description = "테스트 데이터 재고 만들기",required = true)
+            @Parameter(description = "낙관적 락",required = true)
             @PathVariable("qty") int qty
     ) {
         return labLackService.postStackInit(qty);
     }
 
-    //</editor-fold desc="[POST][TEST] 데이터 재고를 새로 만들어 주는 엔드 포인트">
+    //</editor-fold desc="[POST][TEST] 낙관적 락">
 
 
 
