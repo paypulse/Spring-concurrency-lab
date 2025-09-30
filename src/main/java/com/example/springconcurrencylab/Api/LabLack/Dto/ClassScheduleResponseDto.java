@@ -9,15 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @Setter
 @Builder
-public class LabLackStockResponseDto {
-
-    private int id;
-
-    private int quantity;
-
-    private int version;
-
-    private int value;
-
-
+public class ClassScheduleResponseDto {
+    private Long id;
+    private String className;
+    private String classStatus;
+    private String version;
 }

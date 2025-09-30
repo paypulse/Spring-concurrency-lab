@@ -17,7 +17,7 @@ public class LabLackServiceImple implements LabLackService {
         BaseCtlDto rtn = new BaseCtlDto();
         try{
 
-
+            
 
             rtn.setSuccess(true);
             rtn.setCode(StatusCodeEnum.SUCCESS);

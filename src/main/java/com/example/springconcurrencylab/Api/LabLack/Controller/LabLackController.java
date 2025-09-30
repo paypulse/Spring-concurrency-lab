@@ -21,12 +21,12 @@ public class LabLackController {
     private final LabLackService labLackService;
 
     //<editor-fold desc="[POST][TEST] 낙관적 락 ">
-    @PostMapping("/init/stack/{qty}")
+    @PostMapping("/{id}/endClass")
     public ResponseEntity<BaseCtlDto> postStackInit(
             @Parameter(description = "낙관적 락",required = true)
-            @PathVariable("qty") int qty
+            @PathVariable("id") int id
     ) {
-        return labLackService.postStackInit(qty);
+        return labLackService.postStackInit(id);
     }
 
     //</editor-fold desc="[POST][TEST] 낙관적 락">

@@ -1,5 +1,6 @@
 package com.example.springconcurrencylab.Entity;
 
+import com.example.springconcurrencylab.Define.EntityEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,13 +32,10 @@ public class Attendance {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private AttendanceStatus status;
+    private EntityEnum.AttendanceStatus status;
 
     @Version
     private Long version;
 
 }
 
-enum AttendanceStatus {
-    PRESENT, ABSENT
-}

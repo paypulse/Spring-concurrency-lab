@@ -3,6 +3,7 @@
    안타깝지만 언어는 : JAVA 
    spring boot + MYSQL + JPA + QueryDsl 
    [swagger-ui] : http://localhost:7090/swagger-ui/index.html
+   [Test] : JMeter 부하 테스트 
 ```
 
 # 동시성 제어 예제를 염두해 둘 수 밖에 없는 이유 
@@ -114,7 +115,6 @@
  분산 환경이면 Redis / DB Lock Table 까지 고려해야 함 
  DBMS마다 동작 차이가 있으니, 내가 쓰는 DB 기준으로 테스트 필수 
 ```
-
 
 
 

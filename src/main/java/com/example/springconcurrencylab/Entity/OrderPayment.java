@@ -1,5 +1,6 @@
 package com.example.springconcurrencylab.Entity;
 
+import com.example.springconcurrencylab.Define.EntityEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -27,12 +28,8 @@ public class OrderPayment {
 
     @Column (nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private EntityEnum.OrderStatus orderStatus;
 
     @Version
     private Long version;
-}
-
-enum OrderStatus {
-    PENDING, PAID, CANCELED
 }

@@ -1,6 +1,7 @@
 package com.example.springconcurrencylab.Entity;
 
 
+import com.example.springconcurrencylab.Define.EntityEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -29,12 +30,11 @@ public class ClassSchedule {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ClassStatus classStatus;
+    private EntityEnum.ClassStatus classStatus;
 
+    //<editor-fold desc="Optimistic Lock 버전 관리">
     @Version
     private Long version;
+    //</editor-fold desc="Optimistic Lock 버전 관리">
 }
 
-enum ClassStatus {
-    PLANNED, ONGOING, ENDED
-}
