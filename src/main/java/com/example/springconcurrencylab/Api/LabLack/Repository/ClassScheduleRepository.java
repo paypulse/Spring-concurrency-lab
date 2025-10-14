@@ -7,6 +7,7 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class ClassScheduleRepository {
     private final QClassSchedule qClassSchedule = QClassSchedule.classSchedule;
 
     //<editor-fold desc="현재 상태 조회">
+    @Transactional(readOnly = true)
     public ClassScheduleResponseDto findById(Long id) {
         return queryFactory
                 .select(
@@ -33,7 +35,24 @@ public class ClassScheduleRepository {
     }
     //</editor-fold desc="현재 상태 조회">
 
+    //<editor-fold desc="현재 강의 존재 유무, .fetchFirst() != null 결과가 존재 하면 true, 결과가 없으면 false로 반환">
+    @Transactional(readOnly = true)
+    public Boolean findExistClass(Long id) {
+        Boolean result = queryFactory
+                .selectOne()
+                .from(qClassSchedule)
+                .where(
+                        qClassSchedule.id.eq(id),
+                            qClassSchedule.classStatus.ne(EntityEnum.ClassStatus.ENDED)
+                ).fetchFirst() != null;
+        return result;
+
+    }
+    //<editor-fold desc="현재 강의 존재 유무, .fetchFirst() != null 결과가 존재 하면 true, 결과가 없으면 false로 반환">
+
+
     //<editor-fold desc="낙관적 락 기반 수업 종료">
+    @Transactional
     public boolean getClassEndStatus(Long id, Long currentVersion) {
         long updated = queryFactory
                 .update(qClassSchedule)

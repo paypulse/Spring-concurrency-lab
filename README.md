@@ -36,6 +36,9 @@
 - 동시성 제어 (lab.lack)
   - 낙관적 락 (@Value)
     -  @Value 컬럼을 두고 Flush 시점에 값이 바뀌었는지 검증 ->  OptimisticLockException 발생시 재시도 로직 필요
+    -  동시성 충돌이 드물거다라는 낙관적 가정 하에, DB에 실제 락을 걸지 않고, 트랜잭션이 자유롭게 데이터를 읽는다. 
+    -  저장 할때 version 을 비교해서 변경 충돌이 났는지 확인 
+    -  재시도 로직이 꼭 필요 하다. 
     -  ex.  재고 차감, 상태 전환
       ```
        [OptimisticLock] Stock id=1, version=2 → 변경 감지됨 → OptimisticLockException
@@ -55,7 +58,7 @@
     - [직렬 실행 처럼 동작] : @Transactional(isolation = Isolation.SERIALIZABLE)
       ```
       [IsolationTest] READ_COMMITTED → 값이 변경됨
-      [IsolationTest] REPEATABLE_READ → 같은 트랜잭션에서 일관성 유지
+      [IsolationTest] REPEATABLE_READ → 같은 트랜 잭션에서 일관성 유지
       ```
 - 비동기 처리(lab.async)
   - @Async + @EventListener 기반 이벤트 처리

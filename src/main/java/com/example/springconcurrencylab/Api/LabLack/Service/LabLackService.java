@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface LabLackService {
 
-    //<editor-fold desc="[POST][TEST] 데이터 재고를 새로 만들어 주는 엔드 포인트">
-    ResponseEntity<BaseCtlDto> postStackInit(int qty);
-    //</editor-fold desc="[POST][TEST] 데이터 재고를 새로 만들어 주는 엔드 포인트">
+    //<editor-fold desc="[POST][TEST] 낙관적 락 ">
+    ResponseEntity<BaseCtlDto> postIdEndClass(Long id);
+    //</editor-fold desc="[POST][TEST] 낙관적 락 ">
 }

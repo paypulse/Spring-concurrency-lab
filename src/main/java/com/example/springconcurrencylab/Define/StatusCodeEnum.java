@@ -2,7 +2,11 @@ package com.example.springconcurrencylab.Define;
 
 public enum StatusCodeEnum {
     INIT("init"),
-    SUCCESS("success")
+    SUCCESS("success"),
+    CHECK_ID("check.id"),
+    VERSION_MISSMATCH("version.mismatch"),
+    EXCEPTION_ERROR("exception.error"),
+    OPTIMISTIC_LOCK("optimistic.lock"),
 
 
     ;
