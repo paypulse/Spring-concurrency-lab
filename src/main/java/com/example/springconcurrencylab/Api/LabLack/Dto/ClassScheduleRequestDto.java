@@ -1,5 +1,6 @@
 package com.example.springconcurrencylab.Api.LabLack.Dto;
 
+import com.example.springconcurrencylab.Define.EntityEnum;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,9 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassScheduleResponseDto {
-    private Long id;
+public class ClassScheduleRequestDto {
+
     private String className;
-    private String classStatus;
+    private EntityEnum.ClassStatus classStatus;
     private Long version;
 }

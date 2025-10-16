@@ -1,5 +1,6 @@
 package com.example.springconcurrencylab.Api.LabLack.Repository;
 
+import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleRequestDto;
 import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleResponseDto;
 import com.example.springconcurrencylab.Define.EntityEnum;
 import com.example.springconcurrencylab.Entity.QClassSchedule;
@@ -48,7 +49,7 @@ public class ClassScheduleRepository {
         return result;
 
     }
-    //<editor-fold desc="현재 강의 존재 유무, .fetchFirst() != null 결과가 존재 하면 true, 결과가 없으면 false로 반환">
+    //</editor-fold desc="현재 강의 존재 유무, .fetchFirst() != null 결과가 존재 하면 true, 결과가 없으면 false로 반환">
 
 
     //<editor-fold desc="낙관적 락 기반 수업 종료">
@@ -67,5 +68,15 @@ public class ClassScheduleRepository {
         return updated > 0; // 성공 여부 봔환
     }
     //</editor-fold desc="낙관적 락 기반 수업 종료">
+
+    //<editor-fold desc="낙관적 락 테스트 데이터 등록">
+    @Transactional
+    public void saveClassSchedule(ClassScheduleRequestDto classScheduleRequestDto) {
+
+
+    }
+
+    //</editor-fold desc="낙관적 락 테스트 데이터 등록">
+
 
 }

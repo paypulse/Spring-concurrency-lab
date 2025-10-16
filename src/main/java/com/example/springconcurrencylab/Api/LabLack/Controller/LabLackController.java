@@ -28,7 +28,6 @@ public class LabLackController {
         log.info("optimistic.lock.example");
         return labLackService.postIdEndClass(id);
     }
-
     //</editor-fold desc="[POST][TEST] 낙관적 락">
 
 
