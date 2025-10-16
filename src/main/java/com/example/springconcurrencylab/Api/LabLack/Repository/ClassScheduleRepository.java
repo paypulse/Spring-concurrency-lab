@@ -71,12 +71,15 @@ public class ClassScheduleRepository {
 
     //<editor-fold desc="낙관적 락 테스트 데이터 등록">
     @Transactional
-    public void saveClassSchedule(ClassScheduleRequestDto classScheduleRequestDto) {
-
-
+    public long saveClassSchedule(ClassScheduleRequestDto classScheduleRequestDto) {
+        return queryFactory.insert(qClassSchedule)
+                .columns(qClassSchedule.className,
+                        qClassSchedule.classStatus,
+                        qClassSchedule.version)
+                .values(classScheduleRequestDto.getClassName(),
+                        classScheduleRequestDto.getClassStatus(),
+                        classScheduleRequestDto.getVersion())
+                .execute();
     }
-
     //</editor-fold desc="낙관적 락 테스트 데이터 등록">
-
-
 }
