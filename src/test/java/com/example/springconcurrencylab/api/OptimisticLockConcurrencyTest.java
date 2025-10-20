@@ -1,6 +1,7 @@
 package com.example.springconcurrencylab.api;
 
 
+import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleRequestDto;
 import com.example.springconcurrencylab.Api.LabLack.Repository.ClassScheduleRepository;
 import com.example.springconcurrencylab.Define.EntityEnum;
 import com.example.springconcurrencylab.Entity.ClassSchedule;
@@ -26,11 +27,15 @@ class OptimisticLockConcurrencyTest {
     @BeforeEach
     void setUp() {
         // 테스트용 수업 생성
-        ClassSchedule schedule = ClassSchedule
+        ClassScheduleRequestDto schedule = ClassScheduleRequestDto
                 .builder()
                 .className("동시 호출 테스트")
                 .classStatus(EntityEnum.ClassStatus.ONGOING)
                 .build();
+
+        classScheduleRepository.saveClassSchedule(schedule);
+
+
 
 
     }

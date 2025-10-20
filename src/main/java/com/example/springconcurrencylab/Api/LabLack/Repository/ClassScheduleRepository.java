@@ -3,9 +3,11 @@ package com.example.springconcurrencylab.Api.LabLack.Repository;
 import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleRequestDto;
 import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleResponseDto;
 import com.example.springconcurrencylab.Define.EntityEnum;
+import com.example.springconcurrencylab.Entity.ClassSchedule;
 import com.example.springconcurrencylab.Entity.QClassSchedule;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,8 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @RequiredArgsConstructor
 public class ClassScheduleRepository {
-    private final JPAQueryFactory queryFactory;
 
+    private final EntityManager entityManager;
+    private final JPAQueryFactory queryFactory;
     private final QClassSchedule qClassSchedule = QClassSchedule.classSchedule;
 
     //<editor-fold desc="현재 상태 조회">
@@ -71,15 +74,15 @@ public class ClassScheduleRepository {
 
     //<editor-fold desc="낙관적 락 테스트 데이터 등록">
     @Transactional
-    public long saveClassSchedule(ClassScheduleRequestDto classScheduleRequestDto) {
-        return queryFactory.insert(qClassSchedule)
-                .columns(qClassSchedule.className,
-                        qClassSchedule.classStatus,
-                        qClassSchedule.version)
-                .values(classScheduleRequestDto.getClassName(),
-                        classScheduleRequestDto.getClassStatus(),
-                        classScheduleRequestDto.getVersion())
-                .execute();
+    public Long saveClassSchedule(ClassScheduleRequestDto classScheduleRequestDto) {
+        ClassSchedule entity = ClassSchedule.builder()
+                .className(classScheduleRequestDto.getClassName())
+                .classStatus(classScheduleRequestDto.getClassStatus())
+                .version(classScheduleRequestDto.getVersion())
+                .build();
+        entityManager.persist(entity);
+        return entity.getId();
+
     }
     //</editor-fold desc="낙관적 락 테스트 데이터 등록">
 }
