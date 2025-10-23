@@ -8,7 +8,9 @@ import com.example.springconcurrencylab.Entity.QClassSchedule;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +40,26 @@ public class ClassScheduleRepository {
                 .fetchOne();
     }
     //</editor-fold desc="현재 상태 조회">
+
+    //<editor-fold desc="현재 상태 조회 - DB Lock">
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    public ClassScheduleResponseDto findByIdPessimistic(Long id) {
+        return queryFactory
+                .select(
+                        Projections.constructor(
+                            ClassScheduleResponseDto.class,
+                            qClassSchedule.id,
+                            qClassSchedule.className,
+                            qClassSchedule.classStatus.stringValue(),
+                            qClassSchedule.version
+                        )
+                )
+                .from(qClassSchedule)
+                .where(qClassSchedule.id.eq(id))
+                .fetchOne();
+    }
+
+    //</editor-fold desc="현재 상태 조회 - DB Lock">
 
     //<editor-fold desc="현재 강의 존재 유무, .fetchFirst() != null 결과가 존재 하면 true, 결과가 없으면 false로 반환">
     @Transactional(readOnly = true)

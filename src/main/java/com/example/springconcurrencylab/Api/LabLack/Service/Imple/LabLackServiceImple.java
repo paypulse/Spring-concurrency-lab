@@ -22,9 +22,9 @@ public class LabLackServiceImple implements LabLackService {
     private final ClassScheduleRepository classScheduleRepository;
 
 
-    //<editor-fold desc="[POST][TEST] 낙관적 락 ">
+    //<editor-fold desc="[GET][TEST] 낙관적 락 ">
     @Override
-    public ResponseEntity<BaseCtlDto> postIdEndClass(Long id) {
+    public ResponseEntity<BaseCtlDto> getIdOptimistic(Long id) {
         log.info("optimistic.Lock.Service");
         BaseCtlDto rtn = new BaseCtlDto();
         // 몇번째 시도 인가?
@@ -103,5 +103,32 @@ public class LabLackServiceImple implements LabLackService {
         }
         return ResponseEntity.ok(rtn);
     }
-    //</editor-fold desc="[POST][TEST] 낙관적 락 ">
+    //</editor-fold desc="[GET][TEST] 낙관적 락 ">
+
+    //<editor-fold desc="[GET][TEST] 비관적 락 ">
+    @Override
+    public ResponseEntity<BaseCtlDto> getIdPessimistic(Long id) {
+        BaseCtlDto rtn = new BaseCtlDto();
+        try{
+            if (id == null) {
+                rtn.setSuccess(true);
+                rtn.setMessage(StatusCodeEnum.CHECK_ID.getCodeEnum());
+                rtn.setCode(StatusCodeEnum.CHECK_ID);
+                return ResponseEntity.ok(rtn);
+            }
+
+            //현재 강의 조회
+
+
+
+
+        }catch (Exception e){
+            log.error("pessimistic.lock.example.error", e);
+            rtn.setSuccess(false);
+            rtn.setMessage(StatusCodeEnum.EXCEPTION_ERROR.getCodeEnum());
+            rtn.setCode(StatusCodeEnum.EXCEPTION_ERROR);
+        }
+        return ResponseEntity.ok(rtn);
+    }
+    //</editor-fold desc="[GET][TEST] 비관적 락 ">
 }

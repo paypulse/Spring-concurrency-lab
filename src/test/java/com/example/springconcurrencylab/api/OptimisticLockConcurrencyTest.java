@@ -2,6 +2,7 @@ package com.example.springconcurrencylab.api;
 
 
 import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleRequestDto;
+import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleResponseDto;
 import com.example.springconcurrencylab.Api.LabLack.Repository.ClassScheduleRepository;
 import com.example.springconcurrencylab.Api.LabLack.Service.LabLackService;
 import com.example.springconcurrencylab.Define.EntityEnum;
@@ -17,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Slf4j
 @SpringBootTest
@@ -57,23 +60,38 @@ class OptimisticLockConcurrencyTest {
 
         int count  = 0;
 
-        //TODO. 수정 요망
-        try {
-            do {
-                executorService.submit(() -> {
-                    labLackService.postIdEndClass(testClassId);
-                });
+        do {
+            log.info("[start] Thread count : {}", threadCount);
+            //쓰레드 비동기 처리 메서드
+            executorService.submit(()->{
+                try {
+                    labLackService.getIdOptimistic(testClassId);
+                    log.info("성공 Thread : {} ", Thread.currentThread().getName());
+                } catch (Exception e) {
+                    log.error("OptimisticLockException in Thread : {} -> {}", Thread.currentThread().getName(), e.getMessage());
 
-                count ++;
-            }while(count < threadCount);
-        } catch(Exception e){
-            log.error("Excpetion occurred : {}", e.getMessage());
-        } finally{
-            countDownLatch.countDown();
-        }
+                }finally {
+                    countDownLatch.countDown();
+                }
+            });
+            count++;
+            log.info("[end] Thread");
+        }while(count < threadCount);
 
+        // 모든 쓰레드 종료 대기
         countDownLatch.await();
 
+        //최종 확인 상태
+        ClassScheduleResponseDto result =
+                classScheduleRepository.findById(testClassId);
+        if (result == null) {
+            log.warn("테스트 강의 없음. {}", testClassId);
+        }
+        log.info("최종 상태 : {}, version= {}", result.getClassStatus(), result.getVersion());
+
+        //검증
+        assertThat(result.getClassStatus()).isEqualTo(EntityEnum.ClassStatus.ENDED.toString());
+        assertThat(result.getVersion()).isGreaterThan(0);
 
 
     }

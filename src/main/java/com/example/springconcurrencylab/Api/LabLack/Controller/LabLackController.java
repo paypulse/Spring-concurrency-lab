@@ -19,16 +19,30 @@ public class LabLackController {
 
     private final LabLackService labLackService;
 
-    //<editor-fold desc="[POST][TEST] 낙관적 락 ">
-    @GetMapping("/endClass")
-    public ResponseEntity<BaseCtlDto> postIdEndClass(
+    //<editor-fold desc="[GET][TEST] 낙관적 락 ">
+    @GetMapping("/optimistic")
+    public ResponseEntity<BaseCtlDto> getIdOptimistic(
             @Parameter(description = "낙관적 락",required = true)
             @RequestParam("id") Long id
     ) {
         log.info("optimistic.lock.example");
-        return labLackService.postIdEndClass(id);
+        return labLackService.getIdOptimistic(id);
     }
-    //</editor-fold desc="[POST][TEST] 낙관적 락">
+    //</editor-fold desc="[GET][TEST] 낙관적 락">
+
+    //<editor-fold desc="[GET][TEST] 비관적 락 ">
+    @GetMapping("/pessimistic")
+    public ResponseEntity<BaseCtlDto> getIdPessimistic(
+            @Parameter(description = "낙관적 락",required = true)
+            @RequestParam("id") Long id
+    ) {
+        log.info("pessimistic.lock.example");
+        return labLackService.getIdPessimistic(id);
+    }
+    //</editor-fold desc="[GET][TEST] 비관적 락 ">
+
+
+
 
 
 
