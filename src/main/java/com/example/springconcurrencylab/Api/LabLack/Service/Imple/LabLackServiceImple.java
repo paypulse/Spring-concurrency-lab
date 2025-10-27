@@ -67,7 +67,7 @@ public class LabLackServiceImple implements LabLackService {
                     break;
                 }
                 //수업 상태 변경 : 수업 진행 중인 경우 : ongoing  ->  ended로 변경
-                boolean updateStatus = classScheduleRepository.getClassEndStatus(id,classVersion);
+                boolean updateStatus = classScheduleRepository.setClassEndStatus(id,classVersion);
                 log.info("update.class.status.{}", updateStatus);
                 if (updateStatus) {
                     // 강의 종료
@@ -118,10 +118,35 @@ public class LabLackServiceImple implements LabLackService {
             }
 
             //현재 강의 조회
+            ClassScheduleResponseDto classScheduleResponseDto = classScheduleRepository.findByIdPessimistic(id);
+            if (classScheduleResponseDto == null) {
+                rtn.setSuccess(true);
+                rtn.setMessage(StatusCodeEnum.NO_CLASS_SCHEDULED.getCodeEnum());
+                rtn.setCode(StatusCodeEnum.NO_CLASS_SCHEDULED);
+                return ResponseEntity.ok(rtn);
+            }
 
+            // 현재 강의 상태가 ongoing 이 아닌 경우
+            String classStatus = classScheduleResponseDto.getClassStatus();
+            if (!classStatus.equals("ONGOING")) {
+                rtn.setSuccess(true);
+                rtn.setMessage(StatusCodeEnum.CLASS_IS_NOT_ONGOING.getCodeEnum());
+                rtn.setCode(StatusCodeEnum.CLASS_IS_NOT_ONGOING);
+                return ResponseEntity.ok(rtn);
+            }
 
+            //상태 변경
+            boolean updateStatue = classScheduleRepository.setPessimisticClassStatus(id);
+            if (!updateStatue) {
+                rtn.setSuccess(false);
+                rtn.setMessage(StatusCodeEnum.FAIL_UPDATE_CLASS_STATUS.getCodeEnum());
+                rtn.setCode(StatusCodeEnum.FAIL_UPDATE_CLASS_STATUS);
+                return ResponseEntity.ok(rtn);
+            }
 
-
+            rtn.setSuccess(true);
+            rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());
+            rtn.setCode(StatusCodeEnum.SUCCESS);
         }catch (Exception e){
             log.error("pessimistic.lock.example.error", e);
             rtn.setSuccess(false);

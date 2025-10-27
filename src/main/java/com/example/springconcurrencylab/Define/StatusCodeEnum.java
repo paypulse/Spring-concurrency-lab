@@ -16,6 +16,7 @@ public enum StatusCodeEnum {
     CLASS_IS_NOT_ONGOING("class.is.not.ongoing"),
 
     FAIL_CONCURRENCY_LOCK_ISSUE("fail.concurrency.lock.issue"),
+    FAIL_UPDATE_CLASS_STATUS("fail.update.class.status"),
 
     ;
     private final String codeEnum;

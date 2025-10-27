@@ -42,7 +42,6 @@ public class ClassScheduleRepository {
     //</editor-fold desc="현재 상태 조회">
 
     //<editor-fold desc="현재 상태 조회 - DB Lock">
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public ClassScheduleResponseDto findByIdPessimistic(Long id) {
         return queryFactory
                 .select(
@@ -56,6 +55,7 @@ public class ClassScheduleRepository {
                 )
                 .from(qClassSchedule)
                 .where(qClassSchedule.id.eq(id))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .fetchOne();
     }
 
@@ -76,10 +76,9 @@ public class ClassScheduleRepository {
     }
     //</editor-fold desc="현재 강의 존재 유무, .fetchFirst() != null 결과가 존재 하면 true, 결과가 없으면 false로 반환">
 
-
     //<editor-fold desc="낙관적 락 기반 수업 종료">
     @Transactional
-    public boolean getClassEndStatus(Long id, Long currentVersion) {
+    public boolean setClassEndStatus(Long id, Long currentVersion) {
         long updated = queryFactory
                 .update(qClassSchedule)
                 .set(qClassSchedule.classStatus , EntityEnum.ClassStatus.ENDED )
@@ -107,4 +106,18 @@ public class ClassScheduleRepository {
 
     }
     //</editor-fold desc="낙관적 락 테스트 데이터 등록">
+
+    //<editor-fold desc="비관적 락 기반 수업 종료">
+    @Transactional
+    public boolean setPessimisticClassStatus(Long id) {
+        long updated = queryFactory
+                .update(qClassSchedule)
+                .set(qClassSchedule.classStatus , EntityEnum.ClassStatus.ENDED )
+                .where(
+                        qClassSchedule.id.eq(id)
+                )
+                .execute();
+        return updated > 0; // 성공 여부 봔환
+    }
+    //</editor-fold desc="낙관적 락 기반 수업 종료">
 }
