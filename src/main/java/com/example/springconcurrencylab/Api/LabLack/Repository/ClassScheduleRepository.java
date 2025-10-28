@@ -42,18 +42,10 @@ public class ClassScheduleRepository {
     //</editor-fold desc="현재 상태 조회">
 
     //<editor-fold desc="현재 상태 조회 - DB Lock">
-    public ClassScheduleResponseDto findByIdPessimistic(Long id) {
+    @Transactional(readOnly = false)
+    public ClassSchedule findByIdPessimistic(Long id) {
         return queryFactory
-                .select(
-                        Projections.constructor(
-                            ClassScheduleResponseDto.class,
-                            qClassSchedule.id,
-                            qClassSchedule.className,
-                            qClassSchedule.classStatus.stringValue(),
-                            qClassSchedule.version
-                        )
-                )
-                .from(qClassSchedule)
+                .selectFrom(qClassSchedule)
                 .where(qClassSchedule.id.eq(id))
                 .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .fetchOne();

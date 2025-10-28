@@ -37,32 +37,27 @@ public class PessimisticLockConcurrencyTest {
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         // 동기화 도구
         CountDownLatch countDownLatch = new CountDownLatch(threadCount);
-
         int count = 0;
         do {
             executorService.submit(()->{
                 try {
-                    labLackService.getIdPessimistic(17L);
+                    labLackService.getIdPessimistic(18L);
+                    log.info("thread :  {}", Thread.currentThread().getName());
                 } catch (Exception e) {
                     log.error("PessimisticLockException in Thread : {} -> {} ",Thread.currentThread().getName(), e.getMessage());
                 } finally {
                     countDownLatch.countDown();
                 }
             });
-
             count ++;
         }while(count < threadCount);
-
         //모든 쓰레드 종료 대기
         countDownLatch.await();
-
         //최종 확인 상태
         ClassScheduleResponseDto result =
-                classScheduleRepository.findById(17L);
-
+                classScheduleRepository.findById(18L);
         //검증
         assertThat(result.getClassStatus()).isEqualTo(EntityEnum.ClassStatus.ENDED.toString());
-
 
     }
 

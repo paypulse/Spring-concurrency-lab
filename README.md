@@ -119,5 +119,14 @@
  DBMS마다 동작 차이가 있으니, 내가 쓰는 DB 기준으로 테스트 필수 
 ```
 
+### DB 락 확인 
+- mysql 기준 
+  -  SHOW PROCESSLIST;
+### Transaction Isolation 확인 
+- mysql 기준 
+  - SELECT @@tx_isolation; 
+  - REPEATABLE-READ 이상이면 FOR UPDATE 락 동작 정상 
+  
+
 
 

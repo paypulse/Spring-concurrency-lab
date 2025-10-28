@@ -6,6 +6,7 @@ import com.example.springconcurrencylab.Api.LabLack.Repository.ClassScheduleRepo
 import com.example.springconcurrencylab.Api.LabLack.Service.LabLackService;
 import com.example.springconcurrencylab.Define.EntityEnum;
 import com.example.springconcurrencylab.Define.StatusCodeEnum;
+import com.example.springconcurrencylab.Entity.ClassSchedule;
 import jakarta.persistence.OptimisticLockException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -106,6 +108,7 @@ public class LabLackServiceImple implements LabLackService {
     //</editor-fold desc="[GET][TEST] 낙관적 락 ">
 
     //<editor-fold desc="[GET][TEST] 비관적 락 ">
+    @Transactional
     @Override
     public ResponseEntity<BaseCtlDto> getIdPessimistic(Long id) {
         BaseCtlDto rtn = new BaseCtlDto();
@@ -118,7 +121,15 @@ public class LabLackServiceImple implements LabLackService {
             }
 
             //현재 강의 조회
-            ClassScheduleResponseDto classScheduleResponseDto = classScheduleRepository.findByIdPessimistic(id);
+            ClassSchedule classScheduleResponseDto = classScheduleRepository.findByIdPessimistic(id);
+            log.info("Thread.currentThread().getName().{}", id);
+            // check lock 유지 시뮬레이션 (트랜 잭션 유지)
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+
             if (classScheduleResponseDto == null) {
                 rtn.setSuccess(true);
                 rtn.setMessage(StatusCodeEnum.NO_CLASS_SCHEDULED.getCodeEnum());
@@ -127,7 +138,7 @@ public class LabLackServiceImple implements LabLackService {
             }
 
             // 현재 강의 상태가 ongoing 이 아닌 경우
-            String classStatus = classScheduleResponseDto.getClassStatus();
+            String classStatus = String.valueOf(classScheduleResponseDto.getClassStatus());
             if (!classStatus.equals("ONGOING")) {
                 rtn.setSuccess(true);
                 rtn.setMessage(StatusCodeEnum.CLASS_IS_NOT_ONGOING.getCodeEnum());
