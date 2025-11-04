@@ -120,11 +120,16 @@ public class LabLackServiceImple implements LabLackService {
                 return ResponseEntity.ok(rtn);
             }
 
+            log.info("비관적.lock.시도중.{}", id);
+
             //현재 강의 조회
             ClassSchedule classScheduleResponseDto = classScheduleRepository.findByIdPessimistic(id);
-            log.info("Thread.currentThread().getName().{}", id);
+
             // check lock 유지 시뮬레이션 (트랜 잭션 유지)
             try {
+                log.info("===========================================================");
+                log.info("비관적.lock.획득.완료.{}", Thread.currentThread().getName());
+                log.info("===========================================================");
                 Thread.sleep(10000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -154,6 +159,7 @@ public class LabLackServiceImple implements LabLackService {
                 rtn.setCode(StatusCodeEnum.FAIL_UPDATE_CLASS_STATUS);
                 return ResponseEntity.ok(rtn);
             }
+            log.info("update.classStatus.{}", updateStatue);
 
             rtn.setSuccess(true);
             rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());

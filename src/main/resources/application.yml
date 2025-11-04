@@ -29,6 +29,11 @@ logging:
         springconcurrencylab: debug
     org:
       springframework:  info
+      hibernate:
+        SQL: debug
+        orm:
+          jdbc:
+            bind: trace
 
 springdoc:
   swagger-ui:
