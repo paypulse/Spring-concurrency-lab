@@ -112,6 +112,9 @@ public class LabLackServiceImple implements LabLackService {
     @Override
     public ResponseEntity<BaseCtlDto> getIdPessimistic(Long id) {
         BaseCtlDto rtn = new BaseCtlDto();
+        String threadName = Thread.currentThread().getName();
+        long startTime = System.currentTimeMillis();
+
         try{
             if (id == null) {
                 rtn.setSuccess(true);
@@ -120,17 +123,21 @@ public class LabLackServiceImple implements LabLackService {
                 return ResponseEntity.ok(rtn);
             }
 
-            log.info("비관적.lock.시도중.{}", id);
+            log.info("요청.Thread.name.{}./.startTime = {} ", threadName, startTime);
+
+            //비관적 락 시도 직전
+            log.info("비관적.락.획득.시도.Thread.name.{}", threadName);
 
             //현재 강의 조회
             ClassSchedule classScheduleResponseDto = classScheduleRepository.findByIdPessimistic(id);
 
+            //비관적 락 안걸리고 획득
+            log.info("비관적.락.획득.성공.Thread.name.{}.elapsed={}", threadName, System.currentTimeMillis() - startTime);
+
             // check lock 유지 시뮬레이션 (트랜 잭션 유지)
             try {
-                log.info("===========================================================");
-                log.info("비관적.lock.획득.완료.{}", Thread.currentThread().getName());
-                log.info("===========================================================");
-                Thread.sleep(10000);
+
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
