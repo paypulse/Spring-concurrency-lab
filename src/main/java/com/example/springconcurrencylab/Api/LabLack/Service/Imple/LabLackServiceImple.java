@@ -125,18 +125,15 @@ public class LabLackServiceImple implements LabLackService {
 
             log.info("요청.Thread.name.{}./.startTime = {} ", threadName, startTime);
 
-            //비관적 락 시도 직전
-            log.info("비관적.락.획득.시도.Thread.name.{}", threadName);
-
+            log.info("id.{}.조회 선점.Thread.name.{}.elapsed={}", id, threadName, System.currentTimeMillis() - startTime);
             //현재 강의 조회
             ClassSchedule classScheduleResponseDto = classScheduleRepository.findByIdPessimistic(id);
 
-            //비관적 락 안걸리고 획득
-            log.info("비관적.락.획득.성공.Thread.name.{}.elapsed={}", threadName, System.currentTimeMillis() - startTime);
-
-            // check lock 유지 시뮬레이션 (트랜 잭션 유지)
+            //트랜잭션을 15초 동안 끝내지 않는다.
+            //15초 후 메서드가 끝나면, spring이 자동으로 commit.
+            //DB가 락을 해제 한다.
+            //15초 후에는 다른 쓰레드 들이 row에 접근 가능 하다.
             try {
-
                 Thread.sleep(15000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
@@ -167,6 +164,8 @@ public class LabLackServiceImple implements LabLackService {
                 return ResponseEntity.ok(rtn);
             }
             log.info("update.classStatus.{}", updateStatue);
+
+
 
             rtn.setSuccess(true);
             rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());
