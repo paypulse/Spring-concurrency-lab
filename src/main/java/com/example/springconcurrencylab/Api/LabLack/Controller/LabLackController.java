@@ -41,11 +41,13 @@ public class LabLackController {
     }
     //</editor-fold desc="[GET][TEST] 비관적 락 ">
 
-    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 실험">
-   // @GetMapping("/trasnsactionIsolation")
-
-
-    //</editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 실험">
+    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 실험(1)">
+    @GetMapping("/trasnsactionIsolation")
+    public ResponseEntity<BaseCtlDto> getTransactionIsolation(){
+        log.info("trasnsactionIsolation.example");
+        return labLackService.getTransactionIsolation();
+    }
+    //</editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 실험(1)">
 
 
 

@@ -179,4 +179,10 @@ public class LabLackServiceImple implements LabLackService {
         return ResponseEntity.ok(rtn);
     }
     //</editor-fold desc="[GET][TEST] 비관적 락 ">
+
+
+    @Override
+    public ResponseEntity<BaseCtlDto> getTransactionIsolation() {
+        return null;
+    }
 }
