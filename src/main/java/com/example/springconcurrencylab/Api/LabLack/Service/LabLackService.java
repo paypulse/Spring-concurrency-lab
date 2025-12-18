@@ -13,8 +13,8 @@ public interface LabLackService {
     ResponseEntity<BaseCtlDto> getIdPessimistic(Long id);
     //</editor-fold desc="[GET][TEST] 비관적 락 ">
 
-    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 실험(1)">
-    ResponseEntity<BaseCtlDto> getTransactionIsolation();
-    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 실험(1)">
+    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
+    ResponseEntity<BaseCtlDto> getReadUncommited();
+    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
 
 }

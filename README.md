@@ -53,13 +53,11 @@
       ```
   - 트랜잭션 격리 수준 실험 (@Transactional)
   - ex. 조회 정합성 실험 
-    - [기본 값] :  @Transactional(isolation = Isolation.READ_COMMITTED)
+    - [Mysql 기본 값] :  @Transactional(isolation = Isolation.READ_COMMITTED)
     - [동일 트랜잭션 내에서 값 일관성 보장] :  @Transactional(isolation = Isolation.REPEATABLE_READ)
     - [직렬 실행 처럼 동작] : @Transactional(isolation = Isolation.SERIALIZABLE)
-      ```
-      [IsolationTest] READ_COMMITTED → 값이 변경됨
-      [IsolationTest] REPEATABLE_READ → 같은 트랜 잭션에서 일관성 유지
-      ```
+    - [실무에서 거의 안 씀] : READ_UNCOMMITED  : DIRTY READ 
+    
 - 비동기 처리(lab.async)
   - @Async + @EventListener 기반 이벤트 처리
     - eventPublisher.publishEvent(new UpdateTask(...))
@@ -80,7 +78,6 @@
   - MYSQL (로컬 개발 환경)
   - [위치] : lab.db.config
   - DB Lock : 최종 방어선 (데이터 무결성 보장)
-
   - JPA +  QueryDSL 기반 Repository 
     - JPAQueryFactory로 동적 쿼리  + 비관적 락 적용 
     ```

@@ -180,9 +180,11 @@ public class LabLackServiceImple implements LabLackService {
     }
     //</editor-fold desc="[GET][TEST] 비관적 락 ">
 
-
+    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
     @Override
-    public ResponseEntity<BaseCtlDto> getTransactionIsolation() {
+    public ResponseEntity<BaseCtlDto> getReadUncommited() {
+        
         return null;
     }
+    //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
 }
