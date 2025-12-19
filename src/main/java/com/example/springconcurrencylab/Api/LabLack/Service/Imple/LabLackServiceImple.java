@@ -183,8 +183,22 @@ public class LabLackServiceImple implements LabLackService {
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
     @Override
     public ResponseEntity<BaseCtlDto> getReadUncommited() {
-        
-        return null;
+        BaseCtlDto rtn = new BaseCtlDto();
+        try
+        {
+
+
+
+
+            rtn.setSuccess(true);
+            rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());
+            rtn.setCode(StatusCodeEnum.SUCCESS);
+        } catch (Exception e) {
+            log.error("get.transaction.lock.read.commited.error.", e);
+
+        }
+
+        return ResponseEntity.ok(rtn);
     }
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
 }
