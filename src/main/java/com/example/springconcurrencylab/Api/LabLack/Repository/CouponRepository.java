@@ -52,6 +52,11 @@ public class CouponRepository {
     //</editor-fold desc="[등록] insert">
 
     //<editor-fold desc="[수정] update">
+//    public Long updateCoupon(CouponRequestDto req){
+//        long updated = jpaQueryFactory
+//                .update(qCoupon)
+//                .set()
+//    }
 
     //</editor-fold desc="[수정] update">
 
