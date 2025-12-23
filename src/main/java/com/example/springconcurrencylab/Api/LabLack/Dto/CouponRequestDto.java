@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CouponRequestDto {
+    private Long id;
     private String couponCode;
     private Integer issueCount;
     private Integer limitCount;

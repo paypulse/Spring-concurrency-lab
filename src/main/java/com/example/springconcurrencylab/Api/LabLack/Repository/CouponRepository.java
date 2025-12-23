@@ -52,15 +52,25 @@ public class CouponRepository {
     //</editor-fold desc="[등록] insert">
 
     //<editor-fold desc="[수정] update">
-//    public Long updateCoupon(CouponRequestDto req){
-//        long updated = jpaQueryFactory
-//                .update(qCoupon)
-//                .set()
-//    }
-
+    public Boolean updateCoupon(CouponRequestDto req){
+        long updated = jpaQueryFactory
+                .update(qCoupon)
+                .set(qCoupon.couponCode , req.getCouponCode())
+                .set(qCoupon.issueCount, req.getIssueCount())
+                .set(qCoupon.limitCount , req.getLimitCount())
+                .where(
+                    qCoupon.id.eq(req.getId())
+                ).execute();
+        return updated > 0 ; // 성공 여부 반환
+    }
     //</editor-fold desc="[수정] update">
 
     //<editor-fold desc="[삭제] delete">
+//    public Boolean deleteCoupon(Long id) {
+//        log
+//    }
+
+
     //</editor-fold desc="[삭제] delete">
 
 }
