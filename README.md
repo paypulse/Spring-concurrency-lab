@@ -123,7 +123,11 @@
 - mysql 기준 
   - SELECT @@tx_isolation; 
   - REPEATABLE-READ 이상이면 FOR UPDATE 락 동작 정상 
-  
+### 화면 테스트를 위해 Vaadin 이라는걸 써봐야 겠다. 
+- https://vaadin.com/docs/latest/components
+- swagger로만 공유 되기 힘들때, 대략적인 포트 폴리오 용
+- 단순 히 React / Vue 프로젝트 화면 설계 전까지만 도움이 된다. 
+
 
 
 

@@ -66,11 +66,14 @@ public class CouponRepository {
     //</editor-fold desc="[수정] update">
 
     //<editor-fold desc="[삭제] delete">
-//    public Boolean deleteCoupon(Long id) {
-//        log
-//    }
-
-
+    public Boolean deleteCoupon(Long id) {
+        long deleted = jpaQueryFactory
+                .delete(qCoupon)
+                .where(
+                        qCoupon.id.eq(id)
+                ).execute();
+        return deleted >0;
+    }
     //</editor-fold desc="[삭제] delete">
 
 }
