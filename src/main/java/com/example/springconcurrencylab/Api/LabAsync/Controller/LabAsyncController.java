@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "lab.async", description = "동시성 제어")
 @RequiredArgsConstructor
+//TODO. Vaadin 추가 후 RestController 지움, 왜냐, Spring MVC가 먼저 가로 채니까
 @RestController
 @RequestMapping("/api/labAsync")
 @Slf4j

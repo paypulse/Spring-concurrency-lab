@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
@@ -181,14 +182,12 @@ public class LabLackServiceImple implements LabLackService {
     //</editor-fold desc="[GET][TEST] 비관적 락 ">
 
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     @Override
     public ResponseEntity<BaseCtlDto> getReadUncommited() {
         BaseCtlDto rtn = new BaseCtlDto();
         try
         {
-
-
-
 
             rtn.setSuccess(true);
             rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());

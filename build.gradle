@@ -57,7 +57,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
 
     //vaadin
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+    implementation 'com.vaadin:vaadin-spring-boot-starter:24.4.10'
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
