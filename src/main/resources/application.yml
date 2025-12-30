@@ -48,3 +48,7 @@ springdoc:
     display-request-duration: true # ?? ?? ??
   api-docs:
     path: /v3/api-docs         # API ?? JSON ?? ??
+
+
+vaadin:
+  url-mapping: /admin/*
