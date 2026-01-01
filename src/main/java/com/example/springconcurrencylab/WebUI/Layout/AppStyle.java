@@ -28,6 +28,7 @@ public final class AppStyle {
                 ButtonVariant.LUMO_SMALL
         );
 
+// TODO. 다른 ui추가
         link.add(button);
         link.setHighlightCondition(HighlightConditions.sameLocation());
 
