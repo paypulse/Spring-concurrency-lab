@@ -18,6 +18,8 @@ public enum StatusCodeEnum {
     FAIL_CONCURRENCY_LOCK_ISSUE("fail.concurrency.lock.issue"),
     FAIL_UPDATE_CLASS_STATUS("fail.update.class.status"),
 
+    NO_COUPON_INFO("no.coupon.info"),
+
     ;
     private final String codeEnum;
     StatusCodeEnum(String codeEnum) {

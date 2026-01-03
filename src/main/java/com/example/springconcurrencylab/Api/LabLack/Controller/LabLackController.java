@@ -48,10 +48,11 @@ public class LabLackController {
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
     @GetMapping("/readUncommited")
     public ResponseEntity<BaseCtlDto> getReadUncommited(
-
+            @Parameter(description = "READ_UNCOMMITED",required = true)
+            @RequestParam("id") Long id
     ){
-        log.info("trasnsactionIsolation.example");
-        return labLackService.getReadUncommited();
+        log.info("TrasnsactionIsolation.READ_UNCOMMITED.example");
+        return labLackService.getReadUncommited(Long id);
     }
     //</editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
 

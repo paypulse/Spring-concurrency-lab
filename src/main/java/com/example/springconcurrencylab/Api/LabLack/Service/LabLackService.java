@@ -14,7 +14,7 @@ public interface LabLackService {
     //</editor-fold desc="[GET][TEST] 비관적 락 ">
 
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
-    ResponseEntity<BaseCtlDto> getReadUncommited();
+    ResponseEntity<BaseCtlDto> getReadUncommited(Long id);
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
 
 }

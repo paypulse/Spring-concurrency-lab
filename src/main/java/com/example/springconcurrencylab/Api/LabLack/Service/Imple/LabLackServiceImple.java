@@ -2,7 +2,9 @@ package com.example.springconcurrencylab.Api.LabLack.Service.Imple;
 
 import com.example.springconcurrencylab.Api.Base.Dto.BaseCtlDto;
 import com.example.springconcurrencylab.Api.LabLack.Dto.ClassScheduleResponseDto;
+import com.example.springconcurrencylab.Api.LabLack.Dto.CouponResponseDto;
 import com.example.springconcurrencylab.Api.LabLack.Repository.ClassScheduleRepository;
+import com.example.springconcurrencylab.Api.LabLack.Repository.CouponRepository;
 import com.example.springconcurrencylab.Api.LabLack.Service.LabLackService;
 import com.example.springconcurrencylab.Define.EntityEnum;
 import com.example.springconcurrencylab.Define.StatusCodeEnum;
@@ -23,6 +25,7 @@ public class LabLackServiceImple implements LabLackService {
 
     private static final Logger log = LoggerFactory.getLogger(LabLackServiceImple.class);
     private final ClassScheduleRepository classScheduleRepository;
+    private final CouponRepository couponRepository;
 
 
     //<editor-fold desc="[GET][TEST] 낙관적 락 ">
@@ -184,10 +187,34 @@ public class LabLackServiceImple implements LabLackService {
     //<editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
     @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     @Override
-    public ResponseEntity<BaseCtlDto> getReadUncommited() {
+    public ResponseEntity<BaseCtlDto> getReadUncommited(
+            Long id
+    ) {
         BaseCtlDto rtn = new BaseCtlDto();
         try
         {
+            log.info("get.transaction.lock.read.commited.id.{}", id);
+            if (id == null) {
+                 rtn.setSuccess(false);
+                 rtn.setMessage(StatusCodeEnum.CHECK_ID.getCodeEnum());
+                 rtn.setCode(StatusCodeEnum.CHECK_ID);
+                 return ResponseEntity.ok(rtn);
+            }
+
+            // 첫 조회
+            log.info("get.transaction.lock.read.commited.first.id.{}", id);
+            CouponResponseDto couponRes = couponRepository.getCouponById(id);
+            if (couponRes == null) {
+                rtn.setSuccess(true);
+                rtn.setMessage(StatusCodeEnum.NO_COUPON_INFO.getCodeEnum());
+                rtn.setCode(StatusCodeEnum.NO_COUPON_INFO);
+                return ResponseEntity.ok(rtn);
+            }
+
+            // 2. 다른 트랜잭션이 개입 힐 시간
+            // 3. 두번째 조회(같은 트랜잭션)
+            // 4. 응답은 두번째 상태 반환
+
 
             rtn.setSuccess(true);
             rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());
