@@ -52,6 +52,9 @@
       [PessimisticLock] Tx2 대기중... (Tx1 commit 이후 진행)
       ```
   - 트랜잭션 격리 수준 실험 (@Transactional)
+  - 동시에 트랜잭션이 존재 할때, 한 트랜잭션이 무엇을 보게 되는가. 
+  - 목적 :  읽기 일관성의 차이 이해 (이 트랜잭션은 어떤 시점의 데이터를 보나?)
+  - 헥심 :  읽기 가시성, 트랙잭션 격리 수준은 동시성 문제를 해결 하기 위한 도구라기 보다, 동시성 상황에서 어떻게 보이는지릉 이해 하기 위한 개념이다. 
   - ex. 조회 정합성 실험 
     - [Mysql 기본 값] :  @Transactional(isolation = Isolation.READ_COMMITTED)
     - [동일 트랜잭션 내에서 값 일관성 보장] :  @Transactional(isolation = Isolation.REPEATABLE_READ)

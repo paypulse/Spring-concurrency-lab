@@ -203,8 +203,8 @@ public class LabLackServiceImple implements LabLackService {
 
             // 첫 조회
             log.info("get.transaction.lock.read.commited.first.id.{}", id);
-            CouponResponseDto couponRes = couponRepository.getCouponById(id);
-            if (couponRes == null) {
+            CouponResponseDto firstCouponRes = couponRepository.getCouponById(id);
+            if (firstCouponRes == null) {
                 rtn.setSuccess(true);
                 rtn.setMessage(StatusCodeEnum.NO_COUPON_INFO.getCodeEnum());
                 rtn.setCode(StatusCodeEnum.NO_COUPON_INFO);
@@ -212,13 +212,22 @@ public class LabLackServiceImple implements LabLackService {
             }
 
             // 2. 다른 트랜잭션이 개입 힐 시간
+            Thread.sleep(3000);
             // 3. 두번째 조회(같은 트랜잭션)
+            CouponResponseDto secondCouponRes = couponRepository.getCouponById(id);
+            if (secondCouponRes == null) {
+                rtn.setSuccess(true);
+                rtn.setMessage(StatusCodeEnum.NO_COUPON_INFO.getCodeEnum());
+                rtn.setCode(StatusCodeEnum.NO_COUPON_INFO);
+                return ResponseEntity.ok(rtn);
+            }
             // 4. 응답은 두번째 상태 반환
 
 
             rtn.setSuccess(true);
             rtn.setMessage(StatusCodeEnum.SUCCESS.getCodeEnum());
             rtn.setCode(StatusCodeEnum.SUCCESS);
+
         } catch (Exception e) {
             log.error("get.transaction.lock.read.commited.error.", e);
 
