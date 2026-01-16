@@ -52,7 +52,7 @@ public class LabLackController {
             @RequestParam("id") Long id
     ){
         log.info("TrasnsactionIsolation.READ_UNCOMMITED.example");
-        return labLackService.getReadUncommited(Long id);
+        return labLackService.getReadUncommited(id);
     }
     //</editor-fold desc="[GET][TEST] 트랜잭션 격리 수준 (READ_UNCOMMITED)">
 
