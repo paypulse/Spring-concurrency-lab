@@ -58,7 +58,7 @@
   - ex. 조회 정합성 실험 
     - [Mysql 기본 값] :  @Transactional(isolation = Isolation.READ_COMMITTED)
     - [동일 트랜잭션 내에서 값 일관성 보장] :  @Transactional(isolation = Isolation.REPEATABLE_READ)
-    - [직렬 실행 처럼 동작] : @Transactional(isolation = Isolation.SERIALIZABLE)
+    - [직렬 실행 처럼 동작] : @Transactional(isolation = Isolation. SERIALIZABLE)
     - [실무에서 거의 안 씀] : READ_UNCOMMITED  : DIRTY READ 
     
 - 비동기 처리(lab.async)
